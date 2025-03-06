@@ -1,0 +1,17 @@
+{
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/declaration.d.ts"],
+  "compilerOptions": {
+    "jsx": "react" /*Specifies what JSX code is generated*/,
+    "module": "ESNext" /*Specifies what module code is generated*/,
+    "target": "ESNext" /*Set the JavaScript language version for emitted JS and include compatible library declarations*/,
+    "strict": true /*Enables all strict type-checking options*/,
+    "esModuleInterop": true /*Emit additional JS to ease support for importing CommonJs modules.This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "paths": {
+      "~/*": ["./*"]
+    } /*Specifies a set of entries that re-map imports to additional lookup locations*/,
+    "baseUrl": "./" /*Specifies the base directory to resolve non-relative module names*/,
+    "moduleResolution": "node" /*Specifes how TS looks up a file from a given module specifier*/,
+    "resolveJsonModule": true /*Enables importign .json files*/,
+    "forceConsistentCasingInFileNames": true /*Ensures that casing is correct in imports*/
+  }
+}
