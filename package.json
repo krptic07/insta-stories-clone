@@ -1,23 +1,23 @@
 {
-  "name": "portfolio",
+  "name": "insta-stories-clone",
   "version": "1.0.0",
   "private": true,
+  "source": "public/index.html",
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
     "cra-template-typescript": "1.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.1.3",
+    "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
     "redux": "^5.0.1",
     "sass": "^1.83.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "parcel public/index.html",
+    "build": "parcel build public/index.html --dist-dir build",
+    "clean": "rm -rf dist/ .parcel-cache node_modules package-lock.json build"
   },
   "eslintConfig": {
     "extends": [
@@ -38,12 +38,15 @@
     ]
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.13.3",
     "@types/react-dom": "^19.0.3",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "autoprefixer": "^10.4.20",
     "eslint-plugin-react": "^7.33.2",
+    "parcel": "^2.11.0",
     "postcss": "^8.5.3",
+    "process": "^0.11.10",
     "tailwindcss": "^4.0.9"
   }
 }

@@ -1,6 +1,8 @@
 @layer base {
   body {
     @apply font-montserrat;
+    margin: 0;
+    padding: 0;
   }
 }
 

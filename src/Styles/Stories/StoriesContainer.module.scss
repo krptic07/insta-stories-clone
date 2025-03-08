@@ -1,0 +1,18 @@
+.storiesContainer {
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 10px 0;
+}
+
+.storiesWrapper {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 8px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
