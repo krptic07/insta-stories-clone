@@ -2,155 +2,34 @@ import React, { useEffect, useState } from 'react'
 import StoriesContainer, {
   Story
 } from '~/src/Components/Stories/StoriesContainer'
-
 import StoryViewer from '~/src/Components/Stories/StoryViewer'
+import storiesJSONData from '~/src/Data/storiesData.json'
 
 const HomePage: React.FC = () => {
-  const storiesData: Story[] = [
-    {
-      id: '1',
-      imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
-      username: 'sarah_smith',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1516483638261-f4dbaf036963',
-        'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9',
-        'https://images.unsplash.com/photo-1533105079780-92b9be482077'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '2',
-      imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-      username: 'john.travels',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1488646953014-85cb44e25828',
-        'https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '3',
-      imageUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6',
-      username: 'alex_photo',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '4',
-      imageUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9',
-      username: 'emma_creative',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86',
-        'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2',
-        'https://images.unsplash.com/photo-1518609878373-06d740f60d8b'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '5',
-      imageUrl: 'https://images.unsplash.com/photo-1463453091185-61582044d556',
-      username: 'mike_outdoor',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1469474968028-56623f02e42e',
-        'https://images.unsplash.com/photo-1501555088652-021faa106b9b',
-        'https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '6',
-      imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1',
-      username: 'fashion_lisa',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1483985988355-763728e1935b',
-        'https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc',
-        'https://images.unsplash.com/photo-1475180098004-ca77a66827be'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '7',
-      imageUrl: 'https://images.unsplash.com/photo-1502323777036-f29e3972d82f',
-      username: 'art_maria',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b',
-        'https://images.unsplash.com/photo-1513364776144-60967b0f800f',
-        'https://images.unsplash.com/photo-1513519245088-0e12902e5a38'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '8',
-      imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d',
-      username: 'david_tech',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1451187580459-43490279c0fa',
-        'https://images.unsplash.com/photo-1498049794561-7780e7231661',
-        'https://images.unsplash.com/photo-1519389950473-47ba0277781c'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '9',
-      imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb',
-      username: 'style.cat',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1529139574466-a303027c1d8b',
-        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f',
-        'https://images.unsplash.com/photo-1483985988355-763728e1935b'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '10',
-      imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
-      username: 'tom_music',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4',
-        'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae',
-        'https://images.unsplash.com/photo-1470225620780-dba8ba36b745'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '11',
-      imageUrl: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df',
-      username: 'coffee_julia',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1497935586351-b67a49e012bf',
-        'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085',
-        'https://images.unsplash.com/photo-1442512595331-e89e73853f31'
-      ],
-      hasUnseenStory: true
-    },
-    {
-      id: '12',
-      imageUrl: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef',
-      username: 'sports_sam',
-      storiesUrl: [
-        'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5',
-        'https://images.unsplash.com/photo-1461896836934-ffe607ba8211',
-        'https://images.unsplash.com/photo-1535131749006-b7f58c99034b'
-      ],
-      hasUnseenStory: true
-    }
-  ]
-
   const [selectedStoryIndex, setSelectedStoryIndex] = useState<number | null>(
     null
   )
-  const [stories, setStories] = useState<Story[]>(storiesData)
   const [showStoryViewer, setShowStoryViewer] = useState(false)
-  console.log(stories)
+  const [stories, setStories] = useState<Story[]>(() => {
+    const savedStories = sessionStorage.getItem('stories')
+    if (savedStories) {
+      const parsedStories = JSON.parse(savedStories)
+      return parsedStories
+    }
+    return storiesJSONData.stories
+  })
+
+  useEffect(() => {
+    sessionStorage.setItem('stories', JSON.stringify(stories))
+  }, [stories])
 
   const handleStoryComplete = (storyId: string) => {
-    setStories(prevStories =>
-      prevStories.map(story =>
+    setStories(prevStories => {
+      const updatedStories = prevStories.map(story =>
         story.id === storyId ? { ...story, hasUnseenStory: false } : story
       )
-    )
+      return updatedStories
+    })
   }
 
   const handleStoryClick = (index: number) => {

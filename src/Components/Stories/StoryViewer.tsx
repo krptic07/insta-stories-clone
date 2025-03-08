@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from '~/src/Styles/Stories/StoryViewer.module.scss'
 import { Story } from './StoriesContainer'
+import Loader from '../Loader/Loader'
 
 interface StoryViewerProps {
   stories: Story[]
@@ -18,11 +19,71 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
   const [currentIndex, setCurrentIndex] = useState(initialStoryIndex)
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0)
   const [progress, setProgress] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isPaused, setIsPaused] = useState(true)
 
   const currentStory = stories[currentIndex]
   const storyUrls = currentStory.storiesUrl
 
+  const fetchImage = async (url: string): Promise<void> => {
+    try {
+      const response = await fetch(url)
+      if (!response.ok) throw new Error('Failed to fetch image')
+
+      const blob = await response.blob()
+      const imageUrl = URL.createObjectURL(blob)
+
+      // Create image to ensure it's fully loaded
+      return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.onload = () => {
+          URL.revokeObjectURL(imageUrl) // Clean up the object URL
+          resolve()
+        }
+        img.onerror = () => reject(new Error('Failed to load image'))
+        img.src = imageUrl
+      })
+    } catch (error) {
+      console.error('Error loading image:', error)
+      throw error
+    }
+  }
+
+  // Handle image loading
   useEffect(() => {
+    let isMounted = true
+
+    const loadImage = async () => {
+      setIsLoading(true)
+      setIsPaused(true)
+      setProgress(0)
+
+      try {
+        await fetchImage(storyUrls[currentStoryIndex])
+        if (isMounted) {
+          setIsLoading(false)
+          setIsPaused(false)
+        }
+      } catch (error) {
+        if (isMounted) {
+          setIsLoading(false)
+          setIsPaused(false)
+          // Optionally handle error case
+          console.error('Failed to load image:', error)
+        }
+      }
+    }
+
+    loadImage()
+
+    return () => {
+      isMounted = false
+    }
+  }, [currentIndex, currentStoryIndex, storyUrls])
+
+  useEffect(() => {
+    if (isLoading || isPaused) return
+
     const timer = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
@@ -54,8 +115,42 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
     storyUrls.length,
     onClose,
     onStoryComplete,
-    currentStory.id
+    currentStory.id,
+    isLoading,
+    isPaused
   ])
+
+  //Preload next image
+  useEffect(() => {
+    const preloadNextImage = async () => {
+      const nextStoryIndex = currentStoryIndex + 1
+      const nextStoryGroupIndex = currentIndex + 1
+
+      if (nextStoryIndex < storyUrls.length) {
+        // Preload next image in current story group
+        try {
+          await fetchImage(storyUrls[nextStoryIndex])
+        } catch (error) {
+          console.error('Failed to preload next image:', error)
+        }
+      } else if (nextStoryGroupIndex < stories.length) {
+        // Preload first image of next story group
+        const nextStoryUrls = Array.isArray(
+          stories[nextStoryGroupIndex].storiesUrl
+        )
+          ? stories[nextStoryGroupIndex].storiesUrl
+          : [stories[nextStoryGroupIndex].storiesUrl]
+
+        try {
+          await fetchImage(nextStoryUrls[0])
+        } catch (error) {
+          console.error('Failed to preload next story group image:', error)
+        }
+      }
+    }
+
+    preloadNextImage()
+  }, [currentIndex, currentStoryIndex, stories, storyUrls])
 
   const handleTouchArea = (e: React.MouseEvent) => {
     const { clientX } = e
@@ -75,6 +170,10 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
         setProgress(0)
       }
     } else {
+      if (currentStoryIndex === storyUrls.length - 1) {
+        onStoryComplete(currentStory.id)
+      }
+
       if (currentStoryIndex < storyUrls.length - 1) {
         setCurrentStoryIndex(currentStoryIndex + 1)
         setProgress(0)
@@ -125,12 +224,20 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
         </button>
       </div>
 
-      <div className={styles.storyContent} onClick={handleTouchArea}>
+      <div
+        className={styles.storyContent}
+        onClick={!isLoading ? handleTouchArea : undefined}
+      >
         <img
-          className={styles.storyImage}
+          className={`${styles.storyImage} ${isLoading ? styles.hidden : ''}`}
           alt='story'
           src={storyUrls[currentStoryIndex]}
         />
+        {isLoading && (
+          <div className={styles.loaderWrapper}>
+            <Loader size='large' className={styles.storyLoader} />
+          </div>
+        )}
       </div>
     </div>
   )
