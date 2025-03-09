@@ -117,6 +117,8 @@ Each component is designed with a clear responsibility, making it easier to exte
 
 Timer-based progress is implemented to manage automatic story advancement, and tests use fake timers to simulate these behaviors reliably.
 
-## License
+## Deployment
 
-This project is licensed under the MIT License.
+You can view the deployed application at: [Insta Stories Clone](https://insta-stories-clone-nu.vercel.app/)
+
+## License
