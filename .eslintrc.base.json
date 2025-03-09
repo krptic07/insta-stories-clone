@@ -17,6 +17,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jsonc/prettier",
+    "plugin:jest/recommended",
     "plugin:prettier/recommended"
   ],
   "plugins": [
@@ -24,7 +25,8 @@
     "react",
     "unused-imports",
     "import",
-    "simple-import-sort"
+    "simple-import-sort",
+    "jest"
   ],
   "settings": {
     "react": {
@@ -36,7 +38,6 @@
     "max-depth": 2,
     "no-case-declarations": "off",
     "no-unreachable-loop": "error",
-    "no-unneeded-ternany": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }

@@ -52,3 +52,6 @@ package-lock.json
 .pnp.*
 
 .DS_Store
+
+#jest
+coverage/

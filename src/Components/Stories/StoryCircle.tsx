@@ -18,6 +18,7 @@ const StoryCircle: React.FC<StoryCircleProps> = ({
     <div className={styles.storyCircle} onClick={onClick}>
       <div
         className={`${styles.storyRing} ${hasUnseenStory ? styles.unseen : ''}`}
+        data-testid='story-ring'
       >
         <div className={styles.avatarContainer}>
           <img src={imageUrl} alt={username} className={styles.avatar} />
