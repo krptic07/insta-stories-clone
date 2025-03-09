@@ -59,7 +59,7 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
       setProgress(0)
 
       try {
-        await fetchImage(storyUrls[currentStoryIndex])
+        await fetchImage(storyUrls[currentStoryIndex] as string)
         if (isMounted) {
           setIsLoading(false)
           setIsPaused(false)
@@ -129,7 +129,7 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
       if (nextStoryIndex < storyUrls.length) {
         // Preload next image in current story group
         try {
-          await fetchImage(storyUrls[nextStoryIndex])
+          await fetchImage(storyUrls[nextStoryIndex] as string)
         } catch (error) {
           console.error('Failed to preload next image:', error)
         }
@@ -142,7 +142,7 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
           : [stories[nextStoryGroupIndex].storiesUrl]
 
         try {
-          await fetchImage(nextStoryUrls[0])
+          await fetchImage(nextStoryUrls[0] as string)
         } catch (error) {
           console.error('Failed to preload next story group image:', error)
         }

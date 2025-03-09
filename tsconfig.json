@@ -1,10 +1,12 @@
 {
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/declaration.d.ts"],
   "compilerOptions": {
-    "jsx": "react" /*Specifies what JSX code is generated*/,
+    "jsx": "react-jsx" /*Specifies what JSX code is generated*/,
     "module": "ESNext" /*Specifies what module code is generated*/,
     "target": "ESNext" /*Set the JavaScript language version for emitted JS and include compatible library declarations*/,
     "strict": true /*Enables all strict type-checking options*/,
+    "types": ["jest", "node"],
+
     "esModuleInterop": true /*Emit additional JS to ease support for importing CommonJs modules.This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "paths": {
       "~/*": ["./*"]
