@@ -20,6 +20,11 @@
     "clean": "rm -rf dist/ .parcel-cache node_modules package-lock.json build",
     "test": "jest --config jestconfig.json"
   },
+  "targets": {
+    "default": {
+      "distDir": "./build"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
